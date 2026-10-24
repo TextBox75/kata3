@@ -9,13 +9,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FileCarReader implements CarReader {
-
-    private final File carFile;
-
-    public FileCarReader(File carFile) {
-        this.carFile = carFile;
-    }
+public record FileCarReader(File carFile) implements CarReader {
 
     @Override
     public List<Car> ReadAllCars() {
@@ -43,7 +37,11 @@ public class FileCarReader implements CarReader {
     private List<Car> ReadLines(List<String> lines) {
         List<Car> cars = new ArrayList<>();
         for (int i = 1; i < lines.size(); i++) {
-            cars.add(ReadLines(lines.get(i)));
+            try {
+                cars.add(ReadLines(lines.get(i)));
+            } catch (IllegalArgumentException e) {
+                continue;
+            }
         }
 
         return cars;
