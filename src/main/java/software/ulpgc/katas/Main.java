@@ -1,6 +1,7 @@
 package software.ulpgc.katas;
 
 import software.ulpgc.katas.adapters.FileCarReader;
+import software.ulpgc.katas.adapters.JSONFileCarReader;
 import software.ulpgc.katas.model.CarReportSerializer;
 import software.ulpgc.katas.adapters.FileCarReportWriter;
 import software.ulpgc.katas.model.Car;
@@ -15,7 +16,7 @@ import java.util.List;
 
 public class Main {
     static void main() {
-        CarReader reader = new FileCarReader(new File("./io/car-reordered.csv"));
+        CarReader reader = new FileCarReader(new File("./io/car.csv"));
         List<Car> cars = reader.ReadAllCars();
 
         CarMetricsCalculator metricsCalculator = new CarMetricsCalculator(cars);
@@ -28,5 +29,16 @@ public class Main {
 
         CarReportWriter writer = new FileCarReportWriter("./io/report.json");
         writer.WriteCars(serializedReports);
+
+        // =============================================================
+
+        JSONFileCarReader jsonReader = new JSONFileCarReader("./io/report.json");
+        List<Car> jsonCars = jsonReader.ReadAllCars();
+        System.out.println(jsonCars.size());
+
+        CarMetricsCalculator jsonMetricsCalculator = new CarMetricsCalculator(jsonCars);
+        CarMetricsResult jsonMetricsResult = jsonMetricsCalculator.calculateMetrics();
+
+        System.out.println(jsonMetricsResult.averageKilometers());
     }
 }

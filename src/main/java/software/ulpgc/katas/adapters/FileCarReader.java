@@ -17,8 +17,6 @@ public record FileCarReader(File carFile) implements CarReader {
             List<Car> cars = ReadLines(is);
             is.close();
             return cars;
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
