@@ -5,15 +5,17 @@ import com.google.gson.GsonBuilder;
 
 public class CarReportSerializer {
 
+    private final CarReport report;
     private final Gson gson;
 
-    public CarReportSerializer() {
+    public CarReportSerializer(CarReport report) {
+        this.report = report;
         this.gson = new GsonBuilder()
                 .setPrettyPrinting()
                 .create();
     }
 
-    public String SerializeReport(CarReport carReport) {
-        return gson.toJson(carReport);
+    public String SerializeReport() {
+        return gson.toJson(this.report);
     }
 }

@@ -1,13 +1,9 @@
 package software.ulpgc.katas;
 
 import software.ulpgc.katas.adapters.FileCarReader;
-import software.ulpgc.katas.adapters.JSONFileCarReader;
-import software.ulpgc.katas.model.CarReportSerializer;
-import software.ulpgc.katas.adapters.FileCarReportWriter;
-import software.ulpgc.katas.model.Car;
-import software.ulpgc.katas.model.CarMetricsCalculator;
-import software.ulpgc.katas.model.CarMetricsResult;
-import software.ulpgc.katas.model.CarReport;
+import software.ulpgc.katas.adapters.JSONCarReportReader;
+import software.ulpgc.katas.model.*;
+import software.ulpgc.katas.adapters.JSONCarReportWriter;
 import software.ulpgc.katas.ports.CarReader;
 import software.ulpgc.katas.ports.CarReportWriter;
 
@@ -24,21 +20,23 @@ public class Main {
 
         CarReport report = new CarReport(metricsResult, cars);
 
-        CarReportSerializer serializer = new CarReportSerializer();
-        String serializedReports = serializer.SerializeReport(report);
+        CarReportSerializer serializer = new CarReportSerializer(report);
+        String serializedReportsString = serializer.SerializeReport();
 
-        CarReportWriter writer = new FileCarReportWriter("./io/report.json");
-        writer.WriteCars(serializedReports);
+        CarSerializedReport serializedReport = new CarSerializedReport("./io/report.json", serializedReportsString);
+
+        CarReportWriter writer = new JSONCarReportWriter(serializedReport);
+        writer.WriteCars();
 
         // =============================================================
 
-        JSONFileCarReader jsonReader = new JSONFileCarReader("./io/report.json");
-        List<Car> jsonCars = jsonReader.ReadAllCars();
-        System.out.println(jsonCars.size());
+        JSONCarReportReader jsonReader = new JSONCarReportReader("./io/report.json");
+        CarReport jsonCars = jsonReader.ReadAllCars();
+        /*System.out.println(jsonCars.size());
 
         CarMetricsCalculator jsonMetricsCalculator = new CarMetricsCalculator(jsonCars);
         CarMetricsResult jsonMetricsResult = jsonMetricsCalculator.calculateMetrics();
 
-        System.out.println(jsonMetricsResult.averageKilometers());
+        System.out.println(jsonMetricsResult.averageKilometers());*/
     }
 }
