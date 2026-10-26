@@ -1,40 +1,40 @@
 package software.ulpgc.katas;
 
-import software.ulpgc.katas.adapters.FileCarReader;
-import software.ulpgc.katas.adapters.JSONCarReportReader;
+import software.ulpgc.katas.adapters.FilePassengerReader;
+import software.ulpgc.katas.adapters.JSONPassengerReportReader;
+import software.ulpgc.katas.adapters.JSONPassengerReportWriter;
 import software.ulpgc.katas.model.*;
-import software.ulpgc.katas.adapters.JSONCarReportWriter;
-import software.ulpgc.katas.ports.CarReader;
-import software.ulpgc.katas.ports.CarReportWriter;
+import software.ulpgc.katas.ports.PassengerReader;
+import software.ulpgc.katas.ports.PassengerWriter;
 
 import java.io.File;
 import java.util.List;
 
 public class Main {
     static void main() {
-        CarReader reader = new FileCarReader(new File("./io/car.csv"));
-        List<Car> cars = reader.ReadAllCars();
+        PassengerReader reader = new FilePassengerReader(new File("./io/Passenger.csv"));
+        List<Passenger> Passengers = reader.ReadAllPassengers();
 
-        CarMetricsCalculator metricsCalculator = new CarMetricsCalculator(cars);
-        CarMetricsResult metricsResult = metricsCalculator.calculateMetrics();
+        PassengerMetricsCalculator metricsCalculator = new PassengerMetricsCalculator(Passengers);
+        PassengerMetricsResult metricsResult = metricsCalculator.calculateMetrics();
 
-        CarReport report = new CarReport(metricsResult, cars);
+        PassengerReport report = new PassengerReport(metricsResult, Passengers);
 
-        CarReportSerializer serializer = new CarReportSerializer(report);
+        PassengerReportSerializer serializer = new PassengerReportSerializer(report);
         String serializedReportsString = serializer.SerializeReport();
 
-        CarSerializedReport serializedReport = new CarSerializedReport("./io/report.json", serializedReportsString);
+        PassengerSerializedReport serializedReport = new PassengerSerializedReport("./io/report.json", serializedReportsString);
 
-        CarReportWriter writer = new JSONCarReportWriter(serializedReport);
-        writer.WriteCars();
+        PassengerWriter writer = new JSONPassengerReportWriter(serializedReport);
+        writer.WritePassengers();
 
-        JSONCarReportReader jsonReader = new JSONCarReportReader("./io/report.json");
-        CarReport jsonCars = jsonReader.ReadCarReport();
-        System.out.println(jsonCars.cars().size());
+        JSONPassengerReportReader jsonReader = new JSONPassengerReportReader("./io/report.json");
+        PassengerReport jsonPassengers = jsonReader.ReadPassengerReport();
+        System.out.println(jsonPassengers.passengers().size());
 
-        CarMetricsCalculator jsonMetricsCalculator = new CarMetricsCalculator(cars);
-        CarMetricsResult jsonMetricsResult = jsonMetricsCalculator.calculateMetrics();
+        PassengerMetricsCalculator jsonMetricsCalculator = new PassengerMetricsCalculator(Passengers);
+        PassengerMetricsResult jsonMetricsResult = jsonMetricsCalculator.calculateMetrics();
 
-        System.out.println(jsonMetricsResult.averageKilometers());
+        System.out.println(jsonMetricsResult.averageAge());
     }
 }

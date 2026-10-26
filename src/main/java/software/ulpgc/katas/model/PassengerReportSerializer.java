@@ -3,12 +3,12 @@ package software.ulpgc.katas.model;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-public class CarReportSerializer {
+public class PassengerReportSerializer {
 
-    private final CarReport report;
+    private final PassengerReport report;
     private final Gson gson;
 
-    public CarReportSerializer(CarReport report) {
+    public PassengerReportSerializer(PassengerReport report) {
         this.report = report;
         this.gson = new GsonBuilder()
                 .setPrettyPrinting()

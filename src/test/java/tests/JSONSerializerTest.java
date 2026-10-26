@@ -1,13 +1,13 @@
 package tests;
 
 import org.junit.jupiter.api.Test;
-import software.ulpgc.katas.adapters.FileCarReader;
-import software.ulpgc.katas.adapters.JSONCarReportReader;
-import software.ulpgc.katas.adapters.JSONCarReportWriter;
-import software.ulpgc.katas.adapters.URLCarReader;
+import software.ulpgc.katas.adapters.FilePassengerReader;
+import software.ulpgc.katas.adapters.JSONPassengerReportReader;
+import software.ulpgc.katas.adapters.JSONPassengerReportWriter;
+import software.ulpgc.katas.io.URLPassengerReader;
 import software.ulpgc.katas.model.*;
-import software.ulpgc.katas.ports.CarReader;
-import software.ulpgc.katas.ports.CarReportWriter;
+import software.ulpgc.katas.ports.PassengerReader;
+import software.ulpgc.katas.ports.PassengerWriter;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -19,93 +19,93 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class JSONSerializerTest {
     @Test
     public void testJSONSerializer() {
-        CarReader reader = new FileCarReader(new File("./io/car.csv"));
-        List<Car> cars = reader.ReadAllCars();
+        PassengerReader reader = new FilePassengerReader(new File("./io/Passenger.csv"));
+        List<Passenger> Passengers = reader.ReadAllPassengers();
 
-        CarMetricsCalculator calculator = new CarMetricsCalculator(cars);
-        CarMetricsResult result = calculator.calculateMetrics();
+        PassengerMetricsCalculator calculator = new PassengerMetricsCalculator(Passengers);
+        PassengerMetricsResult result = calculator.calculateMetrics();
 
-        CarReport report = new CarReport(result, cars);
-        CarReportSerializer serializer = new CarReportSerializer(report);
+        PassengerReport report = new PassengerReport(result, Passengers);
+        PassengerReportSerializer serializer = new PassengerReportSerializer(report);
 
         String serializedString = serializer.SerializeReport();
-        CarSerializedReport serializedReport = new CarSerializedReport("./io/report.json", serializedString);
+        PassengerSerializedReport serializedReport = new PassengerSerializedReport("./io/report.json", serializedString);
 
-        CarReportWriter writer = new JSONCarReportWriter(serializedReport);
-        writer.WriteCars();
+        PassengerWriter writer = new JSONPassengerReportWriter(serializedReport);
+        writer.WritePassengers();
 
-        JSONCarReportReader JSONreader = new JSONCarReportReader("./io/report.json");
-        CarReport readCars = JSONreader.ReadCarReport();
+        JSONPassengerReportReader JSONreader = new JSONPassengerReportReader("./io/report.json");
+        PassengerReport readPassengers = JSONreader.ReadPassengerReport();
 
-        assertEquals(readCars.cars().size(), cars.size());
+        assertEquals(readPassengers.passengers().size(), Passengers.size());
     }
 
     @Test
     public void testJSONMalformedRow() {
-        CarReader reader = new FileCarReader(new File("./io/malformed-row.csv"));
-        List<Car> cars = reader.ReadAllCars();
+        PassengerReader reader = new FilePassengerReader(new File("./io/malformed-row.csv"));
+        List<Passenger> Passengers = reader.ReadAllPassengers();
 
-        CarMetricsCalculator calculator = new CarMetricsCalculator(cars);
-        CarMetricsResult result = calculator.calculateMetrics();
+        PassengerMetricsCalculator calculator = new PassengerMetricsCalculator(Passengers);
+        PassengerMetricsResult result = calculator.calculateMetrics();
 
-        CarReport report = new CarReport(result, cars);
-        CarReportSerializer serializer = new CarReportSerializer(report);
+        PassengerReport report = new PassengerReport(result, Passengers);
+        PassengerReportSerializer serializer = new PassengerReportSerializer(report);
 
         String serializedString = serializer.SerializeReport();
-        CarSerializedReport serializedReport = new CarSerializedReport("./io/report.json", serializedString);
+        PassengerSerializedReport serializedReport = new PassengerSerializedReport("./io/report.json", serializedString);
 
-        CarReportWriter writer = new JSONCarReportWriter(serializedReport);
-        writer.WriteCars();
+        PassengerWriter writer = new JSONPassengerReportWriter(serializedReport);
+        writer.WritePassengers();
 
-        JSONCarReportReader JSONreader = new JSONCarReportReader("./io/report.json");
-        CarReport readCars = JSONreader.ReadCarReport();
+        JSONPassengerReportReader JSONreader = new JSONPassengerReportReader("./io/report.json");
+        PassengerReport readPassengers = JSONreader.ReadPassengerReport();
 
-        assertEquals(readCars.cars().size(), cars.size());
+        assertEquals(readPassengers.passengers().size(), Passengers.size());
     }
 
     @Test
     public void testJSONEmptyDataset() {
-        CarReader reader = new FileCarReader(new File("./io/empty-file.csv"));
-        List<Car> cars = reader.ReadAllCars();
+        PassengerReader reader = new FilePassengerReader(new File("./io/empty-file.csv"));
+        List<Passenger> Passengers = reader.ReadAllPassengers();
 
-        CarMetricsCalculator calculator = new CarMetricsCalculator(cars);
-        CarMetricsResult result = calculator.calculateMetrics();
+        PassengerMetricsCalculator calculator = new PassengerMetricsCalculator(Passengers);
+        PassengerMetricsResult result = calculator.calculateMetrics();
 
-        CarReport report = new CarReport(result, cars);
-        CarReportSerializer serializer = new CarReportSerializer(report);
+        PassengerReport report = new PassengerReport(result, Passengers);
+        PassengerReportSerializer serializer = new PassengerReportSerializer(report);
 
         String serializedString = serializer.SerializeReport();
-        CarSerializedReport serializedReport = new CarSerializedReport("./io/report.json", serializedString);
+        PassengerSerializedReport serializedReport = new PassengerSerializedReport("./io/report.json", serializedString);
 
-        CarReportWriter writer = new JSONCarReportWriter(serializedReport);
-        writer.WriteCars();
+        PassengerWriter writer = new JSONPassengerReportWriter(serializedReport);
+        writer.WritePassengers();
 
-        JSONCarReportReader JSONreader = new JSONCarReportReader("./io/report.json");
-        CarReport readCars = JSONreader.ReadCarReport();
+        JSONPassengerReportReader JSONreader = new JSONPassengerReportReader("./io/report.json");
+        PassengerReport readPassengers = JSONreader.ReadPassengerReport();
 
-        assertEquals(readCars.cars().size(), cars.size());
+        assertEquals(readPassengers.passengers().size(), Passengers.size());
     }
 
     @Test
     public void testJSONURLDataset() throws MalformedURLException {
-        CarReader reader = new URLCarReader(new URL("https://raw.githubusercontent.com/sachin365123/CSV-files-for-Data-Science-and-Machine-Learning/refs/heads/main/car.csv"));
-        List<Car> cars = reader.ReadAllCars();
+        PassengerReader reader = new URLPassengerReader(new URL("https://raw.githubusercontent.com/sachin365123/CSV-files-for-Data-Science-and-Machine-Learning/refs/heads/main/Passenger.csv"));
+        List<Passenger> Passengers = reader.ReadAllPassengers();
 
-        CarMetricsCalculator calculator = new CarMetricsCalculator(cars);
-        CarMetricsResult result = calculator.calculateMetrics();
+        PassengerMetricsCalculator calculator = new PassengerMetricsCalculator(Passengers);
+        PassengerMetricsResult result = calculator.calculateMetrics();
 
-        CarReport report = new CarReport(result, cars);
-        CarReportSerializer serializer = new CarReportSerializer(report);
+        PassengerReport report = new PassengerReport(result, Passengers);
+        PassengerReportSerializer serializer = new PassengerReportSerializer(report);
 
         String serializedString = serializer.SerializeReport();
-        CarSerializedReport serializedReport = new CarSerializedReport("./io/report.json", serializedString);
+        PassengerSerializedReport serializedReport = new PassengerSerializedReport("./io/report.json", serializedString);
 
-        CarReportWriter writer = new JSONCarReportWriter(serializedReport);
-        writer.WriteCars();
+        PassengerWriter writer = new JSONPassengerReportWriter(serializedReport);
+        writer.WritePassengers();
 
-        JSONCarReportReader JSONreader = new JSONCarReportReader("./io/report.json");
-        CarReport readCars = JSONreader.ReadCarReport();
+        JSONPassengerReportReader JSONreader = new JSONPassengerReportReader("./io/report.json");
+        PassengerReport readPassengers = JSONreader.ReadPassengerReport();
 
-        assertEquals(readCars.cars().size(), cars.size());
+        assertEquals(readPassengers.passengers().size(), Passengers.size());
     }
 }
