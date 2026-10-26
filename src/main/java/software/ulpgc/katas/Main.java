@@ -28,15 +28,13 @@ public class Main {
         CarReportWriter writer = new JSONCarReportWriter(serializedReport);
         writer.WriteCars();
 
-        // =============================================================
-
         JSONCarReportReader jsonReader = new JSONCarReportReader("./io/report.json");
-        CarReport jsonCars = jsonReader.ReadAllCars();
-        /*System.out.println(jsonCars.size());
+        CarReport jsonCars = jsonReader.ReadCarReport();
+        System.out.println(jsonCars.cars().size());
 
-        CarMetricsCalculator jsonMetricsCalculator = new CarMetricsCalculator(jsonCars);
+        CarMetricsCalculator jsonMetricsCalculator = new CarMetricsCalculator(cars);
         CarMetricsResult jsonMetricsResult = jsonMetricsCalculator.calculateMetrics();
 
-        System.out.println(jsonMetricsResult.averageKilometers());*/
+        System.out.println(jsonMetricsResult.averageKilometers());
     }
 }

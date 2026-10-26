@@ -8,17 +8,19 @@ import software.ulpgc.katas.model.Car;
 import software.ulpgc.katas.model.CarMetricsResult;
 import software.ulpgc.katas.model.CarReport;
 import software.ulpgc.katas.ports.CarReader;
+import software.ulpgc.katas.ports.CarReportReader;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public record JSONCarReportReader(String fileName) implements CarReader {
+public record JSONCarReportReader(String fileName) implements CarReportReader {
+
     @Override
-    public CarReport ReadAllCars() {
+    public CarReport ReadCarReport() {
         try (FileInputStream is = new FileInputStream(fileName)) {
-            CarReport report = ReadAllCars(is);
+            CarReport report = ReadCarReport(is);
             is.close();
             return report;
         } catch (IOException e) {
@@ -26,38 +28,38 @@ public record JSONCarReportReader(String fileName) implements CarReader {
         }
     }
 
-    private CarReport ReadAllCars(FileInputStream is) {
+    private CarReport ReadCarReport(FileInputStream is) {
         try {
-            return ReadAllCars(is.readAllBytes());
+            return ReadCarReport(is.readAllBytes());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private CarReport ReadAllCars(byte[] bytes) {
-        return ReadAllCars(new String(bytes));
+    private CarReport ReadCarReport(byte[] bytes) {
+        return ReadCarReport(new String(bytes));
     }
 
-    private CarReport ReadAllCars(String string) {
+    private CarReport ReadCarReport(String string) {
         return new CarReport(
-                ReadAllCars(new Gson().fromJson(string, JsonObject.class).get("metrics").getAsJsonObject()),
-                ReadAllCars(new Gson().fromJson(string, JsonObject.class).get("cars").getAsJsonArray())
+                ReadCarReport(new Gson().fromJson(string, JsonObject.class).get("metrics").getAsJsonObject()),
+                ReadCarReport(new Gson().fromJson(string, JsonObject.class).get("cars").getAsJsonArray())
         );
     }
 
-    private CarMetricsResult ReadAllCars(JsonObject object) {
+    private CarMetricsResult ReadCarReport(JsonObject object) {
         return new Gson().fromJson(object, CarMetricsResult.class);
     }
 
-    private List<Car> ReadAllCars(JsonArray jsonArray) {
+    private List<Car> ReadCarReport(JsonArray jsonArray) {
         List<Car> cars = new ArrayList<>();
         for (JsonElement jsonElement : jsonArray) {
-            cars.add(ReadAllCars(jsonElement));
+            cars.add(ReadCarReport(jsonElement));
         }
         return cars;
     }
 
-    private Car ReadAllCars(JsonElement jsonElement) {
+    private Car ReadCarReport(JsonElement jsonElement) {
         return new Gson().fromJson(jsonElement, Car.class);
     }
 }
