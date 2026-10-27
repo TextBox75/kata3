@@ -1,39 +1,39 @@
 package software.ulpgc.katas;
 
-import software.ulpgc.katas.adapters.FileCarReader;
-import software.ulpgc.katas.adapters.JSONCarReportReader;
+import software.ulpgc.katas.adapters.FileWineReader;
+import software.ulpgc.katas.adapters.JSONWineReportReader;
 import software.ulpgc.katas.model.*;
-import software.ulpgc.katas.adapters.JSONCarReportWriter;
-import software.ulpgc.katas.ports.CarReader;
-import software.ulpgc.katas.ports.CarReportWriter;
+import software.ulpgc.katas.adapters.JSONWineReportWriter;
+import software.ulpgc.katas.ports.WineReader;
+import software.ulpgc.katas.ports.WineReportWriter;
 
 import java.io.File;
 import java.util.List;
 
 public class Main {
     static void main() {
-        CarReader reader = new FileCarReader(new File("./io/car.csv"));
-        List<Car> cars = reader.ReadAllCars();
+        WineReader reader = new FileWineReader(new File("./io/Wine.csv"));
+        List<Wine> Wines = reader.ReadAllWines();
 
-        CarMetricsCalculator metricsCalculator = new CarMetricsCalculator(cars);
-        CarMetricsResult metricsResult = metricsCalculator.calculateMetrics();
+        WineMetricsCalculator metricsCalculator = new WineMetricsCalculator(Wines);
+        WineMetricsResult metricsResult = metricsCalculator.calculateMetrics();
 
-        CarReport report = new CarReport(metricsResult, cars);
+        WineReport report = new WineReport(metricsResult, Wines);
 
-        CarReportSerializer serializer = new CarReportSerializer(report);
+        WineReportSerializer serializer = new WineReportSerializer(report);
         String serializedReportsString = serializer.SerializeReport();
 
-        CarSerializedReport serializedReport = new CarSerializedReport("./io/report.json", serializedReportsString);
+        WineSerializedReport serializedReport = new WineSerializedReport("./io/report.json", serializedReportsString);
 
-        CarReportWriter writer = new JSONCarReportWriter(serializedReport);
-        writer.WriteCars();
+        WineReportWriter writer = new JSONWineReportWriter(serializedReport);
+        writer.WriteWines();
 
-        JSONCarReportReader jsonReader = new JSONCarReportReader("./io/report.json");
-        CarReport jsonCars = jsonReader.ReadCarReport();
-        System.out.println(jsonCars.cars().size());
+        JSONWineReportReader jsonReader = new JSONWineReportReader("./io/report.json");
+        WineReport jsonWines = jsonReader.ReadWineReport();
+        System.out.println(jsonWines.Wines().size());
 
-        CarMetricsCalculator jsonMetricsCalculator = new CarMetricsCalculator(cars);
-        CarMetricsResult jsonMetricsResult = jsonMetricsCalculator.calculateMetrics();
+        WineMetricsCalculator jsonMetricsCalculator = new WineMetricsCalculator(Wines);
+        WineMetricsResult jsonMetricsResult = jsonMetricsCalculator.calculateMetrics();
 
         System.out.println(jsonMetricsResult.averageKilometers());
     }

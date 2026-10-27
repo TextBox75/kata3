@@ -1,13 +1,13 @@
 package tests;
 
 import org.junit.jupiter.api.Test;
-import software.ulpgc.katas.adapters.FileCarReader;
-import software.ulpgc.katas.adapters.JSONCarReportReader;
-import software.ulpgc.katas.adapters.JSONCarReportWriter;
-import software.ulpgc.katas.adapters.URLCarReader;
+import software.ulpgc.katas.adapters.FileWineReader;
+import software.ulpgc.katas.adapters.JSONWineReportReader;
+import software.ulpgc.katas.adapters.JSONWineReportWriter;
+import software.ulpgc.katas.adapters.URLWineReader;
 import software.ulpgc.katas.model.*;
-import software.ulpgc.katas.ports.CarReader;
-import software.ulpgc.katas.ports.CarReportWriter;
+import software.ulpgc.katas.ports.WineReader;
+import software.ulpgc.katas.ports.WineReportWriter;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -19,93 +19,93 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class JSONSerializerTest {
     @Test
     public void testJSONSerializer() {
-        CarReader reader = new FileCarReader(new File("./io/car.csv"));
-        List<Car> cars = reader.ReadAllCars();
+        WineReader reader = new FileWineReader(new File("./io/wine_fraud.csv"));
+        List<Wine> Wines = reader.ReadAllWines();
 
-        CarMetricsCalculator calculator = new CarMetricsCalculator(cars);
-        CarMetricsResult result = calculator.calculateMetrics();
+        WineMetricsCalculator calculator = new WineMetricsCalculator(Wines);
+        WineMetricsResult result = calculator.calculateMetrics();
 
-        CarReport report = new CarReport(result, cars);
-        CarReportSerializer serializer = new CarReportSerializer(report);
+        WineReport report = new WineReport(result, Wines);
+        WineReportSerializer serializer = new WineReportSerializer(report);
 
         String serializedString = serializer.SerializeReport();
-        CarSerializedReport serializedReport = new CarSerializedReport("./io/report.json", serializedString);
+        WineSerializedReport serializedReport = new WineSerializedReport("./io/report.json", serializedString);
 
-        CarReportWriter writer = new JSONCarReportWriter(serializedReport);
-        writer.WriteCars();
+        WineReportWriter writer = new JSONWineReportWriter(serializedReport);
+        writer.WriteWines();
 
-        JSONCarReportReader JSONreader = new JSONCarReportReader("./io/report.json");
-        CarReport readCars = JSONreader.ReadCarReport();
+        JSONWineReportReader JSONreader = new JSONWineReportReader("./io/report.json");
+        WineReport readWines = JSONreader.ReadWineReport();
 
-        assertEquals(readCars.cars().size(), cars.size());
+        assertEquals(readWines.Wines().size(), Wines.size());
     }
 
     @Test
     public void testJSONMalformedRow() {
-        CarReader reader = new FileCarReader(new File("./io/malformed-row.csv"));
-        List<Car> cars = reader.ReadAllCars();
+        WineReader reader = new FileWineReader(new File("./io/wine-malformed-row.csv"));
+        List<Wine> Wines = reader.ReadAllWines();
 
-        CarMetricsCalculator calculator = new CarMetricsCalculator(cars);
-        CarMetricsResult result = calculator.calculateMetrics();
+        WineMetricsCalculator calculator = new WineMetricsCalculator(Wines);
+        WineMetricsResult result = calculator.calculateMetrics();
 
-        CarReport report = new CarReport(result, cars);
-        CarReportSerializer serializer = new CarReportSerializer(report);
+        WineReport report = new WineReport(result, Wines);
+        WineReportSerializer serializer = new WineReportSerializer(report);
 
         String serializedString = serializer.SerializeReport();
-        CarSerializedReport serializedReport = new CarSerializedReport("./io/report.json", serializedString);
+        WineSerializedReport serializedReport = new WineSerializedReport("./io/report.json", serializedString);
 
-        CarReportWriter writer = new JSONCarReportWriter(serializedReport);
-        writer.WriteCars();
+        WineReportWriter writer = new JSONWineReportWriter(serializedReport);
+        writer.WriteWines();
 
-        JSONCarReportReader JSONreader = new JSONCarReportReader("./io/report.json");
-        CarReport readCars = JSONreader.ReadCarReport();
+        JSONWineReportReader JSONreader = new JSONWineReportReader("./io/report.json");
+        WineReport readWines = JSONreader.ReadWineReport();
 
-        assertEquals(readCars.cars().size(), cars.size());
+        assertEquals(readWines.Wines().size(), Wines.size());
     }
 
     @Test
     public void testJSONEmptyDataset() {
-        CarReader reader = new FileCarReader(new File("./io/empty-file.csv"));
-        List<Car> cars = reader.ReadAllCars();
+        WineReader reader = new FileWineReader(new File("./io/empty-file.csv"));
+        List<Wine> Wines = reader.ReadAllWines();
 
-        CarMetricsCalculator calculator = new CarMetricsCalculator(cars);
-        CarMetricsResult result = calculator.calculateMetrics();
+        WineMetricsCalculator calculator = new WineMetricsCalculator(Wines);
+        WineMetricsResult result = calculator.calculateMetrics();
 
-        CarReport report = new CarReport(result, cars);
-        CarReportSerializer serializer = new CarReportSerializer(report);
+        WineReport report = new WineReport(result, Wines);
+        WineReportSerializer serializer = new WineReportSerializer(report);
 
         String serializedString = serializer.SerializeReport();
-        CarSerializedReport serializedReport = new CarSerializedReport("./io/report.json", serializedString);
+        WineSerializedReport serializedReport = new WineSerializedReport("./io/report.json", serializedString);
 
-        CarReportWriter writer = new JSONCarReportWriter(serializedReport);
-        writer.WriteCars();
+        WineReportWriter writer = new JSONWineReportWriter(serializedReport);
+        writer.WriteWines();
 
-        JSONCarReportReader JSONreader = new JSONCarReportReader("./io/report.json");
-        CarReport readCars = JSONreader.ReadCarReport();
+        JSONWineReportReader JSONreader = new JSONWineReportReader("./io/report.json");
+        WineReport readWines = JSONreader.ReadWineReport();
 
-        assertEquals(readCars.cars().size(), cars.size());
+        assertEquals(readWines.Wines().size(), Wines.size());
     }
 
     @Test
     public void testJSONURLDataset() throws MalformedURLException {
-        CarReader reader = new URLCarReader(new URL("https://raw.githubusercontent.com/sachin365123/CSV-files-for-Data-Science-and-Machine-Learning/refs/heads/main/car.csv"));
-        List<Car> cars = reader.ReadAllCars();
+        WineReader reader = new URLWineReader(new URL("https://raw.githubusercontent.com/sachin365123/CSV-files-for-Data-Science-and-Machine-Learning/refs/heads/main/wine_fraud.csv"));
+        List<Wine> Wines = reader.ReadAllWines();
 
-        CarMetricsCalculator calculator = new CarMetricsCalculator(cars);
-        CarMetricsResult result = calculator.calculateMetrics();
+        WineMetricsCalculator calculator = new WineMetricsCalculator(Wines);
+        WineMetricsResult result = calculator.calculateMetrics();
 
-        CarReport report = new CarReport(result, cars);
-        CarReportSerializer serializer = new CarReportSerializer(report);
+        WineReport report = new WineReport(result, Wines);
+        WineReportSerializer serializer = new WineReportSerializer(report);
 
         String serializedString = serializer.SerializeReport();
-        CarSerializedReport serializedReport = new CarSerializedReport("./io/report.json", serializedString);
+        WineSerializedReport serializedReport = new WineSerializedReport("./io/report.json", serializedString);
 
-        CarReportWriter writer = new JSONCarReportWriter(serializedReport);
-        writer.WriteCars();
+        WineReportWriter writer = new JSONWineReportWriter(serializedReport);
+        writer.WriteWines();
 
-        JSONCarReportReader JSONreader = new JSONCarReportReader("./io/report.json");
-        CarReport readCars = JSONreader.ReadCarReport();
+        JSONWineReportReader JSONreader = new JSONWineReportReader("./io/report.json");
+        WineReport readWines = JSONreader.ReadWineReport();
 
-        assertEquals(readCars.cars().size(), cars.size());
+        assertEquals(readWines.Wines().size(), Wines.size());
     }
 }
