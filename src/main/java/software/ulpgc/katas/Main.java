@@ -12,7 +12,7 @@ import java.util.List;
 
 public class Main {
     static void main() {
-        PassengerReader reader = new FilePassengerReader(new File("./io/Passenger.csv"));
+        PassengerReader reader = new FilePassengerReader(new File("./io/Titanic.csv"));
         List<Passenger> Passengers = reader.ReadAllPassengers();
 
         PassengerMetricsCalculator metricsCalculator = new PassengerMetricsCalculator(Passengers);
