@@ -43,7 +43,11 @@ public class FilePassengerReader implements PassengerReader {
     private List<Passenger> ReadLines(List<String> lines) {
         List<Passenger> Passengers = new ArrayList<>();
         for (int i = 1; i < lines.size(); i++) {
-            Passengers.add(ReadLines(lines.get(i)));
+            try {
+                Passengers.add(ReadLines(lines.get(i)));
+            } catch (IllegalArgumentException e) {
+                continue;
+            }
         }
 
         return Passengers;

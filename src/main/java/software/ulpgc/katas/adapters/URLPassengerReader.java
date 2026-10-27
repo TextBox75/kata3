@@ -43,7 +43,11 @@ public class URLPassengerReader implements PassengerReader {
     private List<Passenger> ReadLines(List<String> lines) {
         List<Passenger> passengers = new ArrayList<>();
         for (int i = 1; i < lines.size(); i++) {
-            passengers.add(ReadLines(lines.get(i)));
+            try {
+                passengers.add(ReadLines(lines.get(i)));
+            } catch (IllegalArgumentException e) {
+                continue;
+            }
         }
         return passengers;
     }

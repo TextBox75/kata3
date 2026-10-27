@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class JSONSerializerTest {
     @Test
     public void testJSONSerializer() {
-        PassengerReader reader = new FilePassengerReader(new File("./io/Passenger.csv"));
+        PassengerReader reader = new FilePassengerReader(new File("./io/Titanic.csv"));
         List<Passenger> Passengers = reader.ReadAllPassengers();
 
         PassengerMetricsCalculator calculator = new PassengerMetricsCalculator(Passengers);
@@ -42,7 +42,7 @@ public class JSONSerializerTest {
 
     @Test
     public void testJSONMalformedRow() {
-        PassengerReader reader = new FilePassengerReader(new File("./io/malformed-row.csv"));
+        PassengerReader reader = new FilePassengerReader(new File("./io/Titanic-malformed-row.csv"));
         List<Passenger> Passengers = reader.ReadAllPassengers();
 
         PassengerMetricsCalculator calculator = new PassengerMetricsCalculator(Passengers);
@@ -88,7 +88,7 @@ public class JSONSerializerTest {
 
     @Test
     public void testJSONURLDataset() throws MalformedURLException {
-        PassengerReader reader = new URLPassengerReader(new URL("https://raw.githubusercontent.com/sachin365123/CSV-files-for-Data-Science-and-Machine-Learning/refs/heads/main/Passenger.csv"));
+        PassengerReader reader = new URLPassengerReader(new URL("https://raw.githubusercontent.com/sachin365123/CSV-files-for-Data-Science-and-Machine-Learning/refs/heads/main/Titanic.csv"));
         List<Passenger> Passengers = reader.ReadAllPassengers();
 
         PassengerMetricsCalculator calculator = new PassengerMetricsCalculator(Passengers);
