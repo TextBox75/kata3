@@ -16,7 +16,7 @@ public class WineMetricsCalculator {
     public WineMetricsResult calculateMetrics() {
         return new WineMetricsResult(
                 CalculateRedWines(),
-                CalculateRedWines(),
+                CalculateLegit(),
                 CalculateAveragePH()
         );
     }
@@ -25,7 +25,7 @@ public class WineMetricsCalculator {
         return (int) Wines.stream().filter(Wine -> Wine.type() == red).count();
     }
 
-    private int CalculateManuals()  {
+    private int CalculateLegit()  {
         return (int) Wines.stream().filter(Wine -> Wine.quality() == Legit).count();
     }
 

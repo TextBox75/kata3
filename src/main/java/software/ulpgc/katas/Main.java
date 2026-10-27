@@ -35,6 +35,6 @@ public class Main {
         WineMetricsCalculator jsonMetricsCalculator = new WineMetricsCalculator(Wines);
         WineMetricsResult jsonMetricsResult = jsonMetricsCalculator.calculateMetrics();
 
-        System.out.println(jsonMetricsResult.averageKilometers());
+        System.out.println(jsonMetricsResult.averagePH());
     }
 }
