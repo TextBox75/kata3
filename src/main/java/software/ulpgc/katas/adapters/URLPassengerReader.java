@@ -1,4 +1,4 @@
-package software.ulpgc.katas.io;
+package software.ulpgc.katas.adapters;
 
 import software.ulpgc.katas.model.Gender;
 import software.ulpgc.katas.model.Passenger;

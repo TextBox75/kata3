@@ -5,7 +5,7 @@ import software.ulpgc.katas.adapters.JSONPassengerReportReader;
 import software.ulpgc.katas.adapters.JSONPassengerReportWriter;
 import software.ulpgc.katas.model.*;
 import software.ulpgc.katas.ports.PassengerReader;
-import software.ulpgc.katas.ports.PassengerWriter;
+import software.ulpgc.katas.ports.PassengerReportWriter;
 
 import java.io.File;
 import java.util.List;
@@ -25,7 +25,7 @@ public class Main {
 
         PassengerSerializedReport serializedReport = new PassengerSerializedReport("./io/report.json", serializedReportsString);
 
-        PassengerWriter writer = new JSONPassengerReportWriter(serializedReport);
+        PassengerReportWriter writer = new JSONPassengerReportWriter(serializedReport);
         writer.WritePassengers();
 
         JSONPassengerReportReader jsonReader = new JSONPassengerReportReader("./io/report.json");

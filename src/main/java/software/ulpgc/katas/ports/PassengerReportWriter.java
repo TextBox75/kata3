@@ -1,5 +1,5 @@
 package software.ulpgc.katas.ports;
 
-public interface PassengerWriter {
+public interface PassengerReportWriter {
     void WritePassengers();
 }
