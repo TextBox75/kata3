@@ -17,78 +17,31 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class JSONSerializerTest {
+    private static final String REPORT_PATH = "./io/report.json";
+
     @Test
     public void testJSONSerializer() {
-        CarReader reader = new FileCarReader(new File("./io/car.csv"));
-        List<Car> cars = reader.ReadAllCars();
-
-        CarMetricsCalculator calculator = new CarMetricsCalculator(cars);
-        CarMetricsResult result = calculator.calculateMetrics();
-
-        CarReport report = new CarReport(result, cars);
-        CarReportSerializer serializer = new CarReportSerializer(report);
-
-        String serializedString = serializer.SerializeReport();
-        CarSerializedReport serializedReport = new CarSerializedReport("./io/report.json", serializedString);
-
-        CarReportWriter writer = new JSONCarReportWriter(serializedReport);
-        writer.WriteCars();
-
-        JSONCarReportReader JSONreader = new JSONCarReportReader("./io/report.json");
-        CarReport readCars = JSONreader.ReadCarReport();
-
-        assertEquals(readCars.cars().size(), cars.size());
+        assertSerializer(new FileCarReader(new File("./io/car.csv")));
     }
 
     @Test
     public void testJSONMalformedRow() {
-        CarReader reader = new FileCarReader(new File("./io/malformed-row.csv"));
-        List<Car> cars = reader.ReadAllCars();
-
-        CarMetricsCalculator calculator = new CarMetricsCalculator(cars);
-        CarMetricsResult result = calculator.calculateMetrics();
-
-        CarReport report = new CarReport(result, cars);
-        CarReportSerializer serializer = new CarReportSerializer(report);
-
-        String serializedString = serializer.SerializeReport();
-        CarSerializedReport serializedReport = new CarSerializedReport("./io/report.json", serializedString);
-
-        CarReportWriter writer = new JSONCarReportWriter(serializedReport);
-        writer.WriteCars();
-
-        JSONCarReportReader JSONreader = new JSONCarReportReader("./io/report.json");
-        CarReport readCars = JSONreader.ReadCarReport();
-
-        assertEquals(readCars.cars().size(), cars.size());
+        assertSerializer(new FileCarReader(new File("./io/malformed-row.csv")));
     }
 
     @Test
     public void testJSONEmptyDataset() {
-        CarReader reader = new FileCarReader(new File("./io/empty-file.csv"));
-        List<Car> cars = reader.ReadAllCars();
-
-        CarMetricsCalculator calculator = new CarMetricsCalculator(cars);
-        CarMetricsResult result = calculator.calculateMetrics();
-
-        CarReport report = new CarReport(result, cars);
-        CarReportSerializer serializer = new CarReportSerializer(report);
-
-        String serializedString = serializer.SerializeReport();
-        CarSerializedReport serializedReport = new CarSerializedReport("./io/report.json", serializedString);
-
-        CarReportWriter writer = new JSONCarReportWriter(serializedReport);
-        writer.WriteCars();
-
-        JSONCarReportReader JSONreader = new JSONCarReportReader("./io/report.json");
-        CarReport readCars = JSONreader.ReadCarReport();
-
-        assertEquals(readCars.cars().size(), cars.size());
+        assertSerializer(new FileCarReader(new File("./io/empty-file.csv")));
     }
 
     @Test
     public void testJSONURLDataset() throws MalformedURLException {
-        CarReader reader = new URLCarReader(new URL("https://raw.githubusercontent.com/sachin365123/CSV-files-for-Data-Science-and-Machine-Learning/refs/heads/main/car.csv"));
+        assertSerializer(new URLCarReader(new URL(
+                "https://raw.githubusercontent.com/sachin365123/CSV-files-for-Data-Science-and-Machine-Learning/refs/heads/main/car.csv"
+        )));
+    }
+
+    private void assertSerializer(CarReader reader) {
         List<Car> cars = reader.ReadAllCars();
 
         CarMetricsCalculator calculator = new CarMetricsCalculator(cars);
@@ -98,14 +51,17 @@ public class JSONSerializerTest {
         CarReportSerializer serializer = new CarReportSerializer(report);
 
         String serializedString = serializer.SerializeReport();
-        CarSerializedReport serializedReport = new CarSerializedReport("./io/report.json", serializedString);
+        CarSerializedReport serializedReport = new CarSerializedReport(REPORT_PATH, serializedString);
 
         CarReportWriter writer = new JSONCarReportWriter(serializedReport);
         writer.WriteCars();
 
-        JSONCarReportReader JSONreader = new JSONCarReportReader("./io/report.json");
-        CarReport readCars = JSONreader.ReadCarReport();
+        JSONCarReportReader jsonReader = new JSONCarReportReader(REPORT_PATH);
+        CarReport readCars = jsonReader.ReadCarReport();
 
-        assertEquals(readCars.cars().size(), cars.size());
+        assertEquals(cars.size(), readCars.cars().size());
+        assertEquals(result.manuals(), readCars.metrics().manuals());
+        assertEquals(result.averageKilometers(), readCars.metrics().averageKilometers());
+        assertEquals(result.petrolCars(), readCars.metrics().petrolCars());
     }
 }
