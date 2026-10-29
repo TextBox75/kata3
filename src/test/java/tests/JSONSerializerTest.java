@@ -2,12 +2,12 @@ package tests;
 
 import org.junit.jupiter.api.Test;
 import software.ulpgc.katas.adapters.FileCarReader;
-import software.ulpgc.katas.adapters.JSONCarReportReader;
-import software.ulpgc.katas.adapters.JSONCarReportWriter;
+import software.ulpgc.katas.adapters.JSONCarSerializedReportReader;
+import software.ulpgc.katas.adapters.JSONCarSerializedReportWriter;
 import software.ulpgc.katas.adapters.URLCarReader;
 import software.ulpgc.katas.model.*;
 import software.ulpgc.katas.ports.CarReader;
-import software.ulpgc.katas.ports.CarReportWriter;
+import software.ulpgc.katas.ports.CarSerializedReportWriter;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -53,11 +53,11 @@ public class JSONSerializerTest {
         String serializedString = serializer.SerializeReport();
         CarSerializedReport serializedReport = new CarSerializedReport(REPORT_PATH, serializedString);
 
-        CarReportWriter writer = new JSONCarReportWriter(serializedReport);
-        writer.WriteCars();
+        CarSerializedReportWriter writer = new JSONCarSerializedReportWriter(serializedReport);
+        writer.WriteCarSerializedReport();
 
-        JSONCarReportReader jsonReader = new JSONCarReportReader(REPORT_PATH);
-        CarReport readCars = jsonReader.ReadCarReport();
+        JSONCarSerializedReportReader jsonReader = new JSONCarSerializedReportReader(REPORT_PATH);
+        CarReport readCars = jsonReader.ReadCarSerializedReport();
 
         assertEquals(cars.size(), readCars.cars().size());
         assertEquals(result.manuals(), readCars.metrics().manuals());
