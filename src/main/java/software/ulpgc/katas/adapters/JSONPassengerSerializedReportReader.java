@@ -7,20 +7,17 @@ import com.google.gson.JsonObject;
 import software.ulpgc.katas.model.Passenger;
 import software.ulpgc.katas.model.PassengerMetricsResult;
 import software.ulpgc.katas.model.PassengerReport;
-import software.ulpgc.katas.model.PassengerReport;
-import software.ulpgc.katas.ports.PassengerReader;
-import software.ulpgc.katas.ports.PassengerReportReader;
-import software.ulpgc.katas.ports.PassengerReportReader;
+import software.ulpgc.katas.ports.PassengerSerializedReportReader;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public record JSONPassengerReportReader(String fileName) implements PassengerReportReader {
+public record JSONPassengerSerializedReportReader(String fileName) implements PassengerSerializedReportReader {
 
     @Override
-    public PassengerReport ReadPassengerReport() {
+    public PassengerReport ReadPassengerSerializedReport() {
         try (FileInputStream is = new FileInputStream(fileName)) {
             PassengerReport report = ReadPassengerReport(is);
             is.close();

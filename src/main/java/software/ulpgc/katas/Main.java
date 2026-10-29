@@ -1,11 +1,11 @@
 package software.ulpgc.katas;
 
 import software.ulpgc.katas.adapters.FilePassengerReader;
-import software.ulpgc.katas.adapters.JSONPassengerReportReader;
-import software.ulpgc.katas.adapters.JSONPassengerReportWriter;
+import software.ulpgc.katas.adapters.JSONPassengerSerializedReportReader;
+import software.ulpgc.katas.adapters.JSONPassengerSerializedReportWriter;
 import software.ulpgc.katas.model.*;
 import software.ulpgc.katas.ports.PassengerReader;
-import software.ulpgc.katas.ports.PassengerReportWriter;
+import software.ulpgc.katas.ports.PassengerSerializedReportWriter;
 
 import java.io.File;
 import java.util.List;
@@ -25,11 +25,11 @@ public class Main {
 
         PassengerSerializedReport serializedReport = new PassengerSerializedReport("./io/report.json", serializedReportsString);
 
-        PassengerReportWriter writer = new JSONPassengerReportWriter(serializedReport);
-        writer.WritePassengers();
+        PassengerSerializedReportWriter writer = new JSONPassengerSerializedReportWriter(serializedReport);
+        writer.WritePassengerSerializedReport();
 
-        JSONPassengerReportReader jsonReader = new JSONPassengerReportReader("./io/report.json");
-        PassengerReport jsonPassengers = jsonReader.ReadPassengerReport();
+        JSONPassengerSerializedReportReader jsonReader = new JSONPassengerSerializedReportReader("./io/report.json");
+        PassengerReport jsonPassengers = jsonReader.ReadPassengerSerializedReport();
         System.out.println(jsonPassengers.passengers().size());
 
         PassengerMetricsCalculator jsonMetricsCalculator = new PassengerMetricsCalculator(Passengers);

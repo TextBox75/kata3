@@ -1,15 +1,15 @@
 package software.ulpgc.katas.adapters;
 
 import software.ulpgc.katas.model.PassengerSerializedReport;
-import software.ulpgc.katas.ports.PassengerReportWriter;
+import software.ulpgc.katas.ports.PassengerSerializedReportWriter;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public record JSONPassengerReportWriter(PassengerSerializedReport serializedReport) implements PassengerReportWriter {
+public record JSONPassengerSerializedReportWriter(PassengerSerializedReport serializedReport) implements PassengerSerializedReportWriter {
 
     @Override
-    public void WritePassengers() {
+    public void WritePassengerSerializedReport() {
         try {
             FileOutputStream fos = new FileOutputStream(serializedReport.fileName());
             fos.write(serializedReport.data().getBytes());
