@@ -2,12 +2,12 @@ package tests;
 
 import org.junit.jupiter.api.Test;
 import software.ulpgc.katas.adapters.FileWineReader;
-import software.ulpgc.katas.adapters.JSONWineReportReader;
-import software.ulpgc.katas.adapters.JSONWineReportWriter;
+import software.ulpgc.katas.adapters.JSONWineSerializedReportReader;
+import software.ulpgc.katas.adapters.JSONWineSerializedReportWriter;
 import software.ulpgc.katas.adapters.URLWineReader;
 import software.ulpgc.katas.model.*;
 import software.ulpgc.katas.ports.WineReader;
-import software.ulpgc.katas.ports.WineReportWriter;
+import software.ulpgc.katas.ports.WineSerializedReportWriter;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -53,11 +53,11 @@ public class JSONSerializerTest {
         String serializedString = serializer.SerializeReport();
         WineSerializedReport serializedReport = new WineSerializedReport(REPORT_PATH, serializedString);
 
-        WineReportWriter writer = new JSONWineReportWriter(serializedReport);
-        writer.WriteWines();
+        WineSerializedReportWriter writer = new JSONWineSerializedReportWriter(serializedReport);
+        writer.WriteWineSerializedReport();
 
-        JSONWineReportReader jsonReader = new JSONWineReportReader(REPORT_PATH);
-        WineReport readWines = jsonReader.ReadWineReport();
+        JSONWineSerializedReportReader jsonReader = new JSONWineSerializedReportReader(REPORT_PATH);
+        WineReport readWines = jsonReader.ReadWineSerializedReport();
 
         assertEquals(Wines.size(), readWines.Wines().size());
         assertEquals(result.legitWines(), readWines.metrics().legitWines());

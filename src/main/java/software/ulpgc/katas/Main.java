@@ -1,11 +1,11 @@
 package software.ulpgc.katas;
 
 import software.ulpgc.katas.adapters.FileWineReader;
-import software.ulpgc.katas.adapters.JSONWineReportReader;
+import software.ulpgc.katas.adapters.JSONWineSerializedReportReader;
 import software.ulpgc.katas.model.*;
-import software.ulpgc.katas.adapters.JSONWineReportWriter;
+import software.ulpgc.katas.adapters.JSONWineSerializedReportWriter;
 import software.ulpgc.katas.ports.WineReader;
-import software.ulpgc.katas.ports.WineReportWriter;
+import software.ulpgc.katas.ports.WineSerializedReportWriter;
 
 import java.io.File;
 import java.util.List;
@@ -25,11 +25,11 @@ public class Main {
 
         WineSerializedReport serializedReport = new WineSerializedReport("./io/report.json", serializedReportsString);
 
-        WineReportWriter writer = new JSONWineReportWriter(serializedReport);
-        writer.WriteWines();
+        WineSerializedReportWriter writer = new JSONWineSerializedReportWriter(serializedReport);
+        writer.WriteWineSerializedReport();
 
-        JSONWineReportReader jsonReader = new JSONWineReportReader("./io/report.json");
-        WineReport jsonWines = jsonReader.ReadWineReport();
+        JSONWineSerializedReportReader jsonReader = new JSONWineSerializedReportReader("./io/report.json");
+        WineReport jsonWines = jsonReader.ReadWineSerializedReport();
         System.out.println(jsonWines.Wines().size());
 
         WineMetricsCalculator jsonMetricsCalculator = new WineMetricsCalculator(Wines);

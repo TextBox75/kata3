@@ -7,18 +7,17 @@ import com.google.gson.JsonObject;
 import software.ulpgc.katas.model.Wine;
 import software.ulpgc.katas.model.WineMetricsResult;
 import software.ulpgc.katas.model.WineReport;
-import software.ulpgc.katas.ports.WineReader;
-import software.ulpgc.katas.ports.WineReportReader;
+import software.ulpgc.katas.ports.WineSerializedReportReader;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public record JSONWineReportReader(String fileName) implements WineReportReader {
+public record JSONWineSerializedReportReader(String fileName) implements WineSerializedReportReader {
 
     @Override
-    public WineReport ReadWineReport() {
+    public WineReport ReadWineSerializedReport() {
         try (FileInputStream is = new FileInputStream(fileName)) {
             WineReport report = ReadWineReport(is);
             is.close();
