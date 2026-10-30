@@ -7,18 +7,17 @@ import com.google.gson.JsonObject;
 import software.ulpgc.katas.model.Car;
 import software.ulpgc.katas.model.CarMetricsResult;
 import software.ulpgc.katas.model.CarReport;
-import software.ulpgc.katas.ports.CarReader;
-import software.ulpgc.katas.ports.CarReportReader;
+import software.ulpgc.katas.ports.CarSerializedReportReader;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public record JSONCarReportReader(String fileName) implements CarReportReader {
+public record JSONCarSerializedReportReader(String fileName) implements CarSerializedReportReader {
 
     @Override
-    public CarReport ReadCarReport() {
+    public CarReport ReadCarSerializedReport() {
         try (FileInputStream is = new FileInputStream(fileName)) {
             CarReport report = ReadCarReport(is);
             is.close();

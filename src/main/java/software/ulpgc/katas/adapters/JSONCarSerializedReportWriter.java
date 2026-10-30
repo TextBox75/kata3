@@ -1,15 +1,15 @@
 package software.ulpgc.katas.adapters;
 
 import software.ulpgc.katas.model.CarSerializedReport;
-import software.ulpgc.katas.ports.CarReportWriter;
+import software.ulpgc.katas.ports.CarSerializedReportWriter;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public record JSONCarReportWriter(CarSerializedReport serializedReport) implements CarReportWriter {
+public record JSONCarSerializedReportWriter(CarSerializedReport serializedReport) implements CarSerializedReportWriter {
 
     @Override
-    public void WriteCars() {
+    public void WriteCarSerializedReport() {
         try {
             FileOutputStream fos = new FileOutputStream(serializedReport.fileName());
             fos.write(serializedReport.data().getBytes());
