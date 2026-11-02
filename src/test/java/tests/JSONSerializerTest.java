@@ -48,6 +48,7 @@ public class JSONSerializerTest {
         CarMetricsResult result = calculator.calculateMetrics();
 
         CarReport report = new CarReport(result, cars);
+
         CarReportSerializer serializer = new CarReportSerializer(report);
 
         String serializedString = serializer.SerializeReport();

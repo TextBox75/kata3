@@ -29,7 +29,7 @@ El main se encarga de orquestar todos los componentes de los microproyectos. Cad
 Los componentes de entrada y salida implementan adaptadores específicos para la manipulación y almacenamiento de la información serializada en JSON.
 
 ### Enlace al vídeo
-(PENDIENTE)
+https://www.youtube.com/watch?v=apP3caIazNQ
 
 ### Verificación
 La verificación se ha realizado mediante pruebas automatizadas de JUnit Jupiter. Hay un único fichero de pruebas que estudia

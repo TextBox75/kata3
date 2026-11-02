@@ -5,10 +5,7 @@ import software.ulpgc.katas.model.Fuel;
 import software.ulpgc.katas.model.Transmission;
 import software.ulpgc.katas.ports.CarReader;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +29,7 @@ public class URLCarReader implements CarReader {
 
     private List<Car> ReadLines(InputStream stream) throws IOException {
         try (Reader reader = new InputStreamReader(stream)) {
-            return ReadLines(reader);
+            return ReadLines(new BufferedReader(reader));
         }
     }
 
